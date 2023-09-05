@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MDN Games: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+</head>
+<body>
+<script src="three.js"></script>
+<script>
+const scene = new THREE.Scene(); 
+//Crea una nueva instancia de la clase THREE.Scene, que representa una escena 3D vacía.
+//Almacena y organiza objetos 3D en la escena
+
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+// Crea una cámara en perspectiva de la clase THREE.perspectiveCamera. Este método tiene 3 parámetros de visión: 
+// Campo de visión en grados '75' en grados
+// Relación de aspecto de la cámara basada en el alto y ancho de la ventana del navegador
+//Distancia cerca del plano de recorte '0.1'
+//Distancia lejana del plano de recorte '1000'
+//Esto sirve para definir la camara desde la cual se verá la escena en perspectiva
+
+const renderer = new THREE.WebGLRenderer();
+//Constructor que prepara el motor de renderizado. Crea una nueva instancia de la clase 'THREE.WebGLRenderer', que se utiliza para renderizar la escena utilizando WebGL.
+
+renderer.setSize( window.innerWidth, window.innerHeight );
+// Método que establece el tamaño de la ventana de renderizado para que coincida con el tamaño de la ventana del navegador. Se cuenta con los siguientes parámetros:
+//'window.innerWidth' Ancho de la ventana del navegador.
+//'window.innerHeight' Alto de la ventana del navegador.
+//Esto sirve para ajustar el tamaño del área de renderizado.
+
+document.body.appendChild( renderer.domElement );
+//Es un método que adjunta el elemento de renderizado (lienzo WebGL) al cuerpo del documento HTML.
+// 'renderer.domElement' es el elemento HTML del motor de renderizado.
+
+const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+//Función que crea una geometría de un cubo (BoxGeometry) con dimensiones especificadas.
+//Parámetros: Ancho del cubo, largo del cubo, alto del cubo
+
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+//Función que crea un material básico (MeshBasicMaterial) con un color específico.
+// Parametro { color: 0x00ff00 } define color del material en formato hexadecimal.
+const cube = new THREE.Mesh( geometry, material );
+//Función que crea una malla (Mesh) combinando una geometría y un material.
+//Parámetros: geometry: La geometría del objeto. material: El material del objeto.
+//Crea un objeto 3D (en este caso, un cubo) combinando geometría y material.
+
+scene.add( cube );
+//Método que agrega el objeto (en este caso, el cubo) a la escena.
+// El objeto que se va a agregar en la escena
+
+camera.position.z = 5;
+
+function animate() {
+	requestAnimationFrame( animate );
+
+	cube.rotation.x += 0.01;
+	cube.rotation.y += 0.01;
+
+	renderer.render( scene, camera );
+}
+
+animate();
+</script>
+</body>
+</html>
