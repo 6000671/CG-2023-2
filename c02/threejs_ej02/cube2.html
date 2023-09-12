@@ -61,7 +61,7 @@ const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);;
 
 // Crear un material diferente para la esfera
 const textureLoader = new THREE.TextureLoader();
-const sphereMaterial = new THREE.MeshStandardMaterial({
+const sphereMaterial = new THREE.MeshStandardMaterial({color: 0xff0000
     
 });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -79,10 +79,40 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 
 light.position.set(1, 1, 1); // Definir la posición de la luz
 scene.add(light);
-
+const cubeSpeed = 0.05; // Velocidad de movimiento del cubo
+const sphereSpeed = 0.05; // Velocidad de movimiento de la esfera
 renderer.render(scene, camera);
+const handleKeyDown = (event) => {
+    const key = event.key.toLowerCase();
 
-
+    switch (key) {
+        case 'w':
+            cube.position.z -= cubeSpeed;
+            break;
+        case 's':
+            cube.position.z += cubeSpeed;
+            break;
+        case 'a':
+            cube.position.x -= cubeSpeed;
+            break;
+        case 'd':
+            cube.position.x += cubeSpeed;
+            break;
+        case 'arrowup':
+            sphere.position.z -= sphereSpeed;
+            break;
+        case 'arrowdown':
+            sphere.position.z += sphereSpeed;
+            break;
+        case 'arrowleft':
+            sphere.position.x -= sphereSpeed;
+            break;
+        case 'arrowright':
+            sphere.position.x += sphereSpeed;
+            break;
+    }
+};
+	document.addEventListener('keydown', handleKeyDown);
 </script>
 </body>
 </html>
