@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cubo con Three.js</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    <script src="three.min.js"></script>
+    <script>
+        // Crear una escena
+        const scene = new THREE.Scene();
+
+        // Crear una cámara
+        const camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.x=2;
+        camera.position.y=2;
+
+        // Crear un renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Crear un cubo de 2x2x2
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        camera.position.z=5;
+
+        // Crear un material (puedes personalizar el color)
+        const material = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
+
+        // Crear una malla (combinación de geometría y material)
+        const cube = new THREE.Mesh(geometry, material);
+
+        // Agregar el cubo a la escena
+        scene.add(cube);
+        renderer.render(scene, camera);
+       
+    </script>
+</body>
+</html>
