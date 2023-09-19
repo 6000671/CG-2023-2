@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-    <script src="three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script>
         // Crear una escena
         const scene = new THREE.Scene();
@@ -65,7 +65,17 @@
         sillaGroup.add(cube, cube1, cube2, cube3, cube4, cylinder);
         // Agregar el grupo a la escena
         scene.add(sillaGroup);
-        
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            // Rotar todo el grupo de la silla
+            sillaGroup.rotation.x += 0.03;
+            sillaGroup.rotation.y += 0.05;
+            
+            renderer.render(scene, camera);
+         };
+
+  animate();
     </script>
 </body>
 </html>
