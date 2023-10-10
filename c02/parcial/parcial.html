@@ -47,13 +47,10 @@
             );
             // Calcular normales para las caras
             geometry.computeFaceNormals();
-
-
-
-
-            const material = new THREE.MeshBasicMaterial({ wireframe: false, side: THREE.DoubleSide, map: texture });
+            const material = new THREE.MeshNormalMaterial({ wireframe: false, side: THREE.DoubleSide, map: texture });
             const customMesh = new THREE.Mesh(geometry, material);
-        
+            customMesh.position.set(x, y, z); // Ajusta la posición del cubo
+            customMesh.scale.set(scale, scale, scale); // Aplica la transformación de escala
             scene.add(customMesh); // Agregar el cubo a la escena
         }
 
@@ -63,9 +60,9 @@
             scene.add(axesHelper);
         }
 
-        camera.position.z = 5;
+        camera.position.z = 10;
         camera.position.x = 1;
-        camera.position.y = 1;
+        camera.position.y = 3;
 
         // Crea tres cubos en el origen con diferentes escalas y texturas
         cubo(0, 0, 0, 1, 'https://img.asmedia.epimg.net/resizer/kw-B3UBPPLI0ysvb-1MmGD7XQHM=/360x0/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/42WBY2CO2ZJ5DPS33M2GBK5UGQ.jpg');
