@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // JavaScript source code
+        // Configuración de la escena
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // Crear un renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Crear geometría personalizada para el cubo
+        const geometry = new THREE.Geometry();
+
+        // Definir los vértices del cubo
+        const vertices = [
+            new THREE.Vector3(-1, -1, -1),
+            new THREE.Vector3(1, -1, -1),
+            new THREE.Vector3(1, 1, -1),
+            new THREE.Vector3(-1, 1, -1),
+            new THREE.Vector3(-1, -1, 1),
+            new THREE.Vector3(1, -1, 1),
+            new THREE.Vector3(1, 1, 1),
+            new THREE.Vector3(-1, 1, 1)
+        ];
+
+        // Agregar vértices a la geometría
+        geometry.vertices = vertices;
+
+        // Definir las caras del cubo
+        geometry.faces.push(new THREE.Face3(0, 1, 2));
+        geometry.faces.push(new THREE.Face3(0, 2, 3));
+        geometry.faces.push(new THREE.Face3(4, 5, 6));
+        geometry.faces.push(new THREE.Face3(4, 6, 7));
+        geometry.faces.push(new THREE.Face3(0, 1, 5));
+        geometry.faces.push(new THREE.Face3(0, 5, 4));
+        geometry.faces.push(new THREE.Face3(2, 3, 7));
+        geometry.faces.push(new THREE.Face3(2, 7, 6));
+        geometry.faces.push(new THREE.Face3(0, 3, 7));
+        geometry.faces.push(new THREE.Face3(0, 7, 4));
+        geometry.faces.push(new THREE.Face3(1, 2, 6));
+        geometry.faces.push(new THREE.Face3(1, 6, 5));
+
+        // Crear un material
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+        // Crear un cubo utilizando la geometría y el material
+        const cube = new THREE.Mesh(geometry, material);
+
+        // Agregar el cubo a la escena
+        scene.add(cube);
+
+        // Posicionar la cámara
+        camera.position.z = 5;
+
+        // Función para animar el cubo
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            // Rotar el cubo
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+          
+        };
+        renderer.render(scene, camera);
+        // Llamar a la función de animación
+        animate();
+
+    </script>
+</body>
+</html>
