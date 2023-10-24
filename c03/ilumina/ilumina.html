@@ -37,7 +37,7 @@ scene.add(directionalLight);
         const tube = new THREE.Mesh(geometry, material);
         const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
         const sphereMaterial = new THREE.MeshLambertMaterial();
-        const sphere = new THREE.Mesh(geometry, material);
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         
         scene.add(sphere);
         scene.add(tube);
