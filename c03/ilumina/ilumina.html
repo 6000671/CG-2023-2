@@ -18,10 +18,10 @@
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('container').appendChild(renderer.domElement);
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(1, 1, 1).normalize();
-scene.add(directionalLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
         const curve = new THREE.CatmullRomCurve3([
             new THREE.Vector3(-2, 0, 0),
             new THREE.Vector3(-1, 1, 0),
@@ -35,27 +35,35 @@ scene.add(directionalLight);
         const geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 100, 0.1, 20, false);
         const material = new THREE.MeshLambertMaterial({ color: 0xB419E4 });
         const tube = new THREE.Mesh(geometry, material);
-        const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
         const sphereMaterial = new THREE.MeshLambertMaterial();
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        const sphere1Geometry = new THREE.SphereGeometry(0.2, 32, 32);
+        const sphere1Material = new THREE.MeshLambertMaterial({ color: 0x19e4b4 });
+        const sphere1 = new THREE.Mesh(sphere1Geometry, sphere1Material);
         
+  
         scene.add(sphere);
+        scene.add(sphere1);
         scene.add(tube);
-
-        const animate = function () {
+        sphere.position.x = 2;
+        sphere1.position.z = 2;
+        sphere1.position.x = 1.5;
+       const animate = function () {
             requestAnimationFrame(animate);
 
             tube.rotation.x += 0.01;
-            tube.rotation.y += 0.01;
+           
             sphere.rotation.x += 0.03;
-            sphere.rotation.y += 0.03;
+           sphere1.rotation.x += 0.03;
             renderer.render(scene, camera);
         };
 
         animate();
-var hemiLight = new THREE.HemisphereLight(0x0000ff, 0x00ff00, 0.6);
+var hemiLight = new THREE.HemisphereLight(0x0000ff, 0x00ff00, 2);
 hemiLight.position.set(0, 500, 0);
-scene.add(hemiLight)
+        scene.add(hemiLight)
+        iluminaGroup.add(tube,sphere,sphere1);
     </script>
 </body>
 </html>
