@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Three.js Example</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+      </style>
+  </head>
+  <body>
+    <div id="container">
+    </div>
+    <button id="toggleButton">Cambiar Material</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+     let usePhongMaterial = false;
+
+function toggleMaterial() {
+  usePhongMaterial = !usePhongMaterial;
+  if (usePhongMaterial) {
+    icosahedronMesh.material = new THREE.MeshPhongMaterial({
+      color: 0x75085B, // Cambia el color según preferencias
+      shininess: 100,  // Ajusta el brillo especular según preferencias
+    });
+  } else {
+    icosahedronMesh.material = createLocalShadingMaterial();
+  }
+}
+
+function createLocalShadingMaterial() {
+  const localShadingMaterial = new THREE.ShaderMaterial({
+    vertexShader: `
+      varying vec3 vNormal;
+      void main() {
+        vNormal = normalMatrix * normal;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vNormal;
+      void main() {
+        vec3 lightDirection = normalize(vec3(3, -2, 5));
+        float brightness = dot(normalize(vNormal), lightDirection);
+        gl_FragColor = vec4(vec3(brightness),1.0);
+      }
+    `,
+  });
+  return localShadingMaterial;
+}
+
+let scene, camera, renderer, icosahedronMesh;
+
+function init() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const IcosahedronGeometry = new THREE.IcosahedronGeometry(20, 0);
+
+  // Aplicar material personalizado al inicio
+  icosahedronMesh = new THREE.Mesh(IcosahedronGeometry, createLocalShadingMaterial());
+
+  const pointLight = new THREE.PointLight(0xffffff);
+  pointLight.position.set(50, 50, 50);
+  const pointLight2 = new THREE.PointLight(0xffffff);
+  pointLight2.position.set(-50, -50, -50);
+
+  const ambientLight = new THREE.AmbientLight(0x404040);
+  ambientLight.position.set(20, 20, 20);
+  const ambientLight2 = new THREE.AmbientLight(0x404040);
+  ambientLight2.position.set(-20, -20, -20);
+  scene.add(pointLight,pointLight2);
+  scene.add(ambientLight,ambientLight2);
+
+  scene.add(icosahedronMesh);
+
+  camera.position.z = 100;
+  
+}
+
+function animate() {
+        requestAnimationFrame(animate);
+
+        // Hacer que la cámara gire alrededor de la escena
+        camera.position.x = 50 * Math.cos(Date.now() * 0.001);
+        camera.position.z = 50 * Math.sin(Date.now() * 0.001);
+        camera.lookAt(0, 0, 0);
+
+        renderer.render(scene, camera);
+      }
+
+
+init();
+animate();
+
+const toggleButton = document.getElementById('toggleButton');
+toggleButton.addEventListener('click', toggleMaterial);
+    </script>
+  </body>
+</html>
