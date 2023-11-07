@@ -15,17 +15,24 @@
 </head>
 
 <body>
+    <div id="Stats-salida">
 
+    </div>
+    <script type="text/javascript">
+       
+    </script>
     <!-- Div que contendre la salida -->
     <div id="WebGL-salida">
     </div>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/10/Stats.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.0.min.js" integrity="sha256-f6DVw/U4x2+HjgEqw5BZf67Kq/5vudRZuRkljnbF344=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script> <!-- Agregamos dat.GUI -->
     <script>
 
         // una vez que todo ha sido cargado, ejecutamos nuestro contenido Three.js.
         $(function () {
+            var stats = iniStats();
 
             // creamos una scene, que contendrá todos nuestros elementos, como objetos, cámaras y luces
             var scene = new THREE.Scene();
@@ -107,9 +114,29 @@
 
             // añadir la salida de la renderizacion al elemento html
             $("#WebGL-salida").append(renderer.domElement);
+            render();
 
-            // renderizar la escena
-            renderer.render(scene, camera);
+            function render() {
+                stats.update();
+                // renderizar la escena
+                cube.rotation.x += 0.02;
+                cube.rotation.y += 0.02;
+                cube.rotation.z += 0.02;
+
+
+                requestAnimationFrame(render);
+                renderer.render(scene, camera);
+            }
+            function iniStats() { 
+                var stats =new Stats();
+                stats.setMode(0);
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.left = '0px';
+                stats.domElement.style.top = '0px';
+
+                $("#Stats-salida").append(stats.domElement);
+                return stats;
+            }
         });
 
 
