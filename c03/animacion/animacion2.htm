@@ -19,11 +19,9 @@
     <!-- Div que contendre la salida -->
     <div id="WebGL-salida">
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>//llama a la libreria three.js
-    <script src="https://code.jquery.com/jquery-1.9.0.min.js"
-            integrity="sha256-f6DVw/U4x2+HjgEqw5BZf67Kq/5vudRZuRkljnbF344="
-            crossorigin="anonymous"></script>//llama a la libreria jquery
-    <!-- Codigo Javascript que ejecuta nuestros ejemplos Three.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/10/Stats.min.js"></script>
     <script>
 
         // una vez que todo ha sido cargado, ejecutamos nuestro contenido Three.js.
@@ -38,7 +36,7 @@
 
             // creamos un render y configuramos el tamaño
             var renderer = new THREE.WebGLRenderer();
-
+            //renderer.setClearColor(new THREE.color(0xEEEEEE));
             //renderer.setClearColorHex(OxEEEEEE);
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.shadowMapEnabled = true;
@@ -48,7 +46,7 @@
 
             // creamos el plano del suelo
             var planeGeometry = new THREE.PlaneGeometry(60, 20);
-            var planeMaterial = new THREE.MeshLambertMaterial({ color: 0x040455 });
+            var planeMaterial = new THREE.MeshLambertMaterial({ color: 0x9BC1BF });
             // var planeMaterial = new THREE.MeshBasicMaterial({color: excccccc}); en vez de la e va un 0
             var plane = new THREE.Mesh(planeGeometry, planeMaterial);
             plane.receiveShadow = true;
@@ -100,8 +98,11 @@
             camera.position.z = 30;
             camera.lookAt(scene.position);
             //añadimos el punto de luz para las sombras
-            var spotLight = new THREE.SpotLight(0xffffff);
+            const spotLight = new THREE.SpotLight(0xffffff);
             spotLight.position.set(-40, 60, -10);
+            spotLight.castShadow = true;
+            spotLight.shadow.mapSize.width = 2048; spotLight.shadow.mapSize.height = 2048;
+            spotLight.angle = Math.PI / 8.0;
             scene.add(spotLight);
 
             // añadir la salida de la renderizacion al elemento html
